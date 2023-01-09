@@ -16,16 +16,82 @@ const teamManager = [{
 {
     type: 'input',
     name: 'email address',
-    message: "Enter the manager's email address",
+    message: "Enter the manager's email address:",
 },
 {
     type: 'input',
     name: 'office number',
-    message: "What is the manager's office number",
+    message: "What is the manager's office number?",
 },
 {
     type: 'list',
     name: 'employee menu',
-    message: 'Who would you like to add?',
+    message: 'Who else would you like to add?',
     choices: ['Intern', 'Engineer']
-}]
+},
+{
+    type: 'input',
+    name: 'name',
+    message: "What is the Engineer's name?",
+},
+{
+    type: 'input',
+    name: 'id',
+    message: "What is the Engineer's employee ID?",
+},
+{
+    type: 'input',
+    name: 'email address',
+    message: "Enter the engineer's email address:",
+},
+{
+    type: 'input',
+    name: 'Github',
+    message: "What is the Engineer's Github username?",
+},
+{
+    type: 'list',
+    name: 'employee menu',
+    message: 'Who else would you like to add?',
+    choices: ['Intern', 'Engineer']
+},
+{
+    type: 'input',
+    name: 'name',
+    message: "What is the Intern's name?"
+},
+{
+    type: 'input',
+    name: 'id',
+    message: "What is the Intern's ID?",
+},
+{
+    type: 'input',
+    name: 'email address',
+    message: "What is the Intern's email address?",
+},
+{
+    type: 'input',
+    name: 'school',
+    message: "What school is the Intern from?",
+},
+{
+    type: 'list',
+    name: 'employee menu',
+    message: 'Who else would you like to add?',
+    choices: ['Intern', 'Engineer', 'Finish building team']
+},
+];
+
+function writeToFile(fileName, data) {
+    return fs.writeFileSync(fileName, data)
+}
+
+function init() {
+    inquirer.createPromptModule(teamManager)
+        .then(function (data) {
+            writeToFile('index.html', generateHTML(data))
+        });
+}
+
+init();
