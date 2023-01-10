@@ -1,5 +1,23 @@
 {
+  "name": "team-profile-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "generateHTML.js",
+  "scripts": {
+    "start": "node script.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osjarju/Team-Profile-Generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/osjarju/Team-Profile-Generator/issues"
+  },
+  "homepage": "https://github.com/osjarju/Team-Profile-Generator#readme",
   "dependencies": {
-    "inquirer": "^9.1.4"
+    "inquirer": "^8.2.5"
   }
 }
