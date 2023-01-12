@@ -1,6 +1,9 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generateHTML = require('./generateHTML');
+console.log(generateHTML.generateManagerHTML({ name: "manager", description: "test" }))
+
+const newEmployee = []
 
 const managerQuestions = [{
     type: 'input',
@@ -14,7 +17,7 @@ const managerQuestions = [{
 },
 {
     type: 'input',
-    name: 'email address',
+    name: 'email',
     message: "Enter the manager's email address:",
 },
 {
@@ -26,9 +29,9 @@ const managerQuestions = [{
 const employeeType = [
     {
         type: 'list',
-        name: 'employee menu',
+        name: 'choices',
         message: 'Who else would you like to add?',
-        choices: ['Intern', 'Engineer', 'Finish building team']
+        choices: ['Intern', 'Engineer', 'Manager', 'None']
     }];
 
 const engineerQuestions = [
@@ -44,13 +47,18 @@ const engineerQuestions = [
     },
     {
         type: 'input',
-        name: 'email address',
+        name: 'email',
         message: "Enter the engineer's email address:",
     },
     {
         type: 'input',
-        name: 'Github',
+        name: 'github',
         message: "What is the Engineer's Github username?",
+    },
+    {
+        type: 'input',
+        name: 'continue',
+        message: 'Would you like to continue?',
     }];
 
 const internQuestions = [
@@ -66,7 +74,7 @@ const internQuestions = [
     },
     {
         type: 'input',
-        name: 'email address',
+        name: 'email',
         message: "What is the Intern's email address?",
     },
     {
@@ -80,10 +88,45 @@ function writeToFile(fileName, data) {
 }
 
 function init() {
-    inquirer.prompt(managerQuestions)
+    inquirer.prompt(employeeType)
         .then(function (data) {
-            writeToFile('index.html', generateHTML(data))
-        });
-}
+            console.log(data)
 
-init();
+            if (data.choices === "Engineer") {
+                console.log("user pick")
+                inquirer.prompt(engineerQuestions)
+                    .then(function (data) {
+                        console.log(data)
+
+                        if (data.choices === "Manager") {
+                            inquirer.prompt(managerQuestions)
+                                .then(function (data) {
+                                    console.log(data)
+
+                                    if (data.choices === "Intern") {
+                                        console.log("user pick")
+                                        inquirer.prompt(internQuestions)
+                                            .then(function (data) {
+                                                console.log(data)
+
+                                                newEmployee.push({name: data.name})
+
+
+                                                if (data.continue === "yes") {
+                                                    init()
+                                                } else { writeToFile('index.html', JSON.stringify(newEmployee)) }
+
+
+                                            })
+                                    }
+                                });
+                            // inquirer.prompt(managerQuestions)
+                            //     .then(function (data) {
+                            //         console.log(data)
+                            //         writeToFile('index.html', generateHTML.generateManagerHTML(data))
+                            //     });
+                        }
+
+                        init();
+
+//else {writeToFile('index.html', generateHTML.generateManagerHTML(data))}

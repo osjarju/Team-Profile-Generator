@@ -1,23 +1,27 @@
-const script = require('./script');
 
-function generateManagerHTML(manager) {
+const generateManagerHTML = (manager) => {
     return `<div>
     <h2>${manager.name}</h2>
-    <p>${manager.description}</p>
+    <p>${manager.email}</p>
     </div>`
 };
 
-function generateEngineerHTML(manager) {
+const generateEngineerHTML = (engineer) => {
     return `<div>
     <h2>${engineer.name}</h2>
-    <p>${engineer.description}</p>
+    <p>${engineer.github}</p>
     </div>`
 };
 
-function generateInternHTML(intern) {
+const generateInternHTML = (intern) => {
     return `<div>
     <h2>${intern.name}</h2>
-    <p>${intern.description}</p>
+    <p>${intern.school}</p>
 </div>`
 };
 
+module.exports = {
+    generateInternHTML,
+    generateEngineerHTML,
+    generateManagerHTML
+}
