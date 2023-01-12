@@ -30,8 +30,8 @@ const employeeType = [
     {
         type: 'list',
         name: 'choices',
-        message: 'Who else would you like to add?',
-        choices: ['Intern', 'Engineer', 'Manager', 'None']
+        message: 'Who would you like to add?',
+        choices: ['Manager', 'Engineer', 'Intern', 'None']
     }];
 
 const engineerQuestions = [
@@ -92,24 +92,22 @@ function init() {
         .then(function (data) {
             console.log(data)
 
-            if (data.choices === "Engineer") {
-                console.log("user pick")
-                inquirer.prompt(engineerQuestions)
+            if (data.choices === "Manager") {
+                inquirer.prompt(managerQuestions)
                     .then(function (data) {
                         console.log(data)
 
-                        if (data.choices === "Manager") {
-                            inquirer.prompt(managerQuestions)
+                        if (data.choices === "Engineer") {
+                            inquirer.prompt(engineerQuestions)
                                 .then(function (data) {
                                     console.log(data)
 
                                     if (data.choices === "Intern") {
-                                        console.log("user pick")
                                         inquirer.prompt(internQuestions)
                                             .then(function (data) {
                                                 console.log(data)
 
-                                                newEmployee.push({name: data.name})
+                                                newEmployee.push({ name: data.name })
 
 
                                                 if (data.continue === "yes") {
@@ -119,14 +117,20 @@ function init() {
 
                                             })
                                     }
-                                });
-                            // inquirer.prompt(managerQuestions)
+                                })
+                        }
+                    })
+            }
+        })
+
+};
+
+init();
+
+                        // inquirer.prompt(managerQuestions)
                             //     .then(function (data) {
                             //         console.log(data)
                             //         writeToFile('index.html', generateHTML.generateManagerHTML(data))
                             //     });
-                        }
-
-                        init();
 
 //else {writeToFile('index.html', generateHTML.generateManagerHTML(data))}
