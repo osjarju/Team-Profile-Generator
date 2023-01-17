@@ -1,10 +1,11 @@
+//import packages
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generateHTML = require('./generateHTML');
-console.log(generateHTML.generateManagerHTML({ name: "manager", description: "test" }))
 
 const newEmployee = []
 
+//questions array - manager
 const managerQuestions = [{
     type: 'input',
     name: 'name',
@@ -22,18 +23,21 @@ const managerQuestions = [{
 },
 {
     type: 'input',
-    name: 'office number',
+    name: 'number',
     message: "What is the manager's office number?",
 }];
 
+//questions array - to add new employee
 const employeeType = [
     {
         type: 'list',
         name: 'choices',
         message: 'Who would you like to add?',
         choices: ['Manager', 'Engineer', 'Intern', 'None']
-    }];
+    }
+];
 
+//questions array - engineer
 const engineerQuestions = [
     {
         type: 'input',
@@ -54,13 +58,10 @@ const engineerQuestions = [
         type: 'input',
         name: 'github',
         message: "What is the Engineer's Github username?",
-    },
-    {
-        type: 'input',
-        name: 'continue',
-        message: 'Would you like to continue?',
-    }];
+    }
+];
 
+//questions array - intern
 const internQuestions = [
     {
         type: 'input',
@@ -83,54 +84,73 @@ const internQuestions = [
         message: "What school is the Intern from?",
     }];
 
+//questions array to continue or end questions
+const continuePrompt = [{
+    type: 'input',
+    name: 'continue',
+    message: 'Would you like to continue? (yes/no)',
+}];
+
 function writeToFile(fileName, data) {
     return fs.writeFileSync(fileName, data)
 }
 
-function init() {
+//function to end questions and generate HTML file if continue declined by typing 'no'
+function inquireEmployeeType() {
     inquirer.prompt(employeeType)
-        .then(function (data) {
-            console.log(data)
+        .then((data) => {
+            if (data.continue === 'no') {
+                writeToFile('index.html', generateHTML.generateManagerHTML(data))
 
-            if (data.choices === "Manager") {
-                inquirer.prompt(managerQuestions)
-                    .then(function (data) {
-                        console.log(data)
-
-                        if (data.choices === "Engineer") {
-                            inquirer.prompt(engineerQuestions)
-                                .then(function (data) {
-                                    console.log(data)
-
-                                    if (data.choices === "Intern") {
-                                        inquirer.prompt(internQuestions)
-                                            .then(function (data) {
-                                                console.log(data)
-
-                                                newEmployee.push({ name: data.name })
-
-
-                                                if (data.continue === "yes") {
-                                                    init()
-                                                } else { writeToFile('index.html', JSON.stringify(newEmployee)) }
-
-
-                                            })
-                                    }
-                                })
-                        }
-                    })
             }
-        })
 
-};
+            //Return manager questions if choice selected is Manager
+            let questions = '';
+            if (data.choices === 'Manager') {
+                questions = managerQuestions;
+
+                //Return engineer questions if choice selected is Engineer
+            } else if (data.choices === 'Engineer') {
+                questions = engineerQuestions;
+
+                //Return intern questions if choice selected is Intern
+            } else if (data.choices === 'Intern') {
+                questions = internQuestions;
+            }
+
+            inquireEmployeeQuestions(questions);
+        });
+}
+
+//function to continue questions if 'yes' typed
+function inquireContinue() {
+    inquirer.prompt(continuePrompt)
+        .then((data) => {
+            if (data.continue === 'yes') {
+                inquireEmployeeType();
+            } else if (data.continue === 'no') {
+                writeToFile('index.html', generateHTML.generateManagerHTML(data))
+            } else {
+                inquireContinue();
+            }
+        });
+}
+
+function inquireEmployeeQuestions(questions) {
+    inquirer.prompt(questions)
+        .then((data) => {
+            console.log(data);
+            inquireContinue();
+        });
+}
+
+function init() {
+    inquireEmployeeType();
+}
 
 init();
 
-                        // inquirer.prompt(managerQuestions)
-                            //     .then(function (data) {
-                            //         console.log(data)
-                            //         writeToFile('index.html', generateHTML.generateManagerHTML(data))
-                            //     });
-
+//Miscellaneous
 //else {writeToFile('index.html', generateHTML.generateManagerHTML(data))}
+//console.log(generateHTML.generateManagerHTML({ name: "manager", description: "test" }))
+
