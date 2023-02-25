@@ -1,26 +1,117 @@
 //import packages
 const fs = require('fs');
 const inquirer = require('inquirer');
-const generateHTML = require('./generateHTML');
+const generateHTML = require('./dist/generateHTML');
 
-const newEmployee = []
+//lib modules
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
+const Manager = require("./lib/manager");
 
-//questions array - manager
+//array for responses to questions
+const newEmployee = [];
+
+//questions populated in terminal
+const questions = async () => {
+    const answers = await inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: "Who is the manager of the team?",
+            },
+            {
+                type: 'input',
+                name: 'id',
+                message: "What is the manager's ID?",
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: "Enter the manager's email address:",
+            },
+            {
+                type: 'input',
+                name: 'number',
+                message: "What is the manager's office number?",
+            },
+            {
+                type: 'list',
+                name: 'role',
+                message: 'Who would you like to add?',
+                choices: ['Manager', 'Engineer', 'Intern', 'None'],
+            },
+        ])
+
+    console.log(answers);
+    //questions if manager selected
+    if (answers.role === "Manager") {
+        const managerAnswers = await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'number',
+                    message: "What is the manager's office number?",
+                },
+            ])
+        const newManager = new Manager(
+            answers.name,
+            answers.id,
+            answers.email,
+            managerAnswers.officeNumber
+        );
+        newEmployee.push(newManager);
+
+        //if engineer selected - answer these questions
+    } else if (answers.role === "Engineer") {
+        const githubAns = await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'github',
+                    message: "What is the Engineer's Github user name?",
+                },
+            ])
+        const newEngineer = new Engineer(
+            answers.name,
+            answers.id,
+            answers.email,
+            githubAns.github
+        );
+        newEmployee.push(newEngineer);
+
+        //if intern selected - answer following questions
+    } else if (answers.role === "Intern") {
+        const internAns = await inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'school',
+                    message: "What university does the intern attend?",
+                },
+            ])
+        const newIntern = new Intern(
+            answers.name,
+            answers.id,
+            answers.email,
+            internAns.school
+        );
+        newEmployee.push(newIntern);
+    }
+};
+
+//function to end questions
+}
+}
+
+
 const managerQuestions = [{
     type: 'input',
     name: 'name',
     message: "Who is the manager of the team?",
 },
-{
-    type: 'input',
-    name: 'id',
-    message: "What is the manager's ID?",
-},
-{
-    type: 'input',
-    name: 'email',
-    message: "Enter the manager's email address:",
-},
+
+
 {
     type: 'input',
     name: 'number',
@@ -99,16 +190,14 @@ function writeToFile(fileName, data) {
 function inquireEmployeeType() {
     inquirer.prompt(employeeType)
         .then((data) => {
-            if (data.continue === 'no') {
-                writeToFile('index.html', generateHTML.generateManagerHTML(data))
 
-            }
-
+            // generateHTML.generateManagerHTML(data))
             //Return manager questions if choice selected is Manager
             let questions = '';
             if (data.choices === 'Manager') {
+                console.log(data.choices)
                 questions = managerQuestions;
-
+                console.log(questions)
                 //Return engineer questions if choice selected is Engineer
             } else if (data.choices === 'Engineer') {
                 questions = engineerQuestions;
@@ -119,6 +208,12 @@ function inquireEmployeeType() {
             }
 
             inquireEmployeeQuestions(questions);
+        })
+        .then((data) => {
+            console.log(data.continue)
+            if (data.continue === 'no') {
+                writeToFile('./dist/index.html', "Hello")
+            }
         });
 }
 
@@ -129,6 +224,7 @@ function inquireContinue() {
             if (data.continue === 'yes') {
                 inquireEmployeeType();
             } else if (data.continue === 'no') {
+                console.log(data.continue)
                 writeToFile('index.html', generateHTML.generateManagerHTML(data))
             } else {
                 inquireContinue();
@@ -153,4 +249,3 @@ init();
 //Miscellaneous
 //else {writeToFile('index.html', generateHTML.generateManagerHTML(data))}
 //console.log(generateHTML.generateManagerHTML({ name: "manager", description: "test" }))
-
