@@ -1,76 +1,71 @@
 //import packages
-const fs = require('fs');
 const inquirer = require('inquirer');
-const generateHTML = require('./dist/generateHTML');
+const fs = require('fs');
+const generateTeam = require('./dist/generateTeam');
 
 //lib modules
-const Engineer = require("./lib/engineer");
-const Intern = require("./lib/intern");
-const Manager = require("./lib/manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+const Manager = require("./lib/Manager");
 
 //array for responses to questions
-const newEmployee = [];
+const newEmployeeData = [];
 
 //questions populated in terminal
 const questions = async () => {
     const answers = await inquirer
         .prompt([
             {
-                type: 'input',
-                name: 'name',
-                message: "Who is the manager of the team?",
+                type: "input",
+                message: "What is your name?",
+                name: "name",
             },
             {
-                type: 'input',
-                name: 'id',
-                message: "What is the manager's ID?",
+                type: "input",
+                message: "What is yor ID number?",
+                name: "id",
             },
             {
-                type: 'input',
-                name: 'email',
-                message: "Enter the manager's email address:",
+                type: "input",
+                message: "What is your email?",
+                name: "email",
             },
             {
-                type: 'input',
-                name: 'number',
-                message: "What is the manager's office number?",
-            },
-            {
-                type: 'list',
-                name: 'role',
-                message: 'Who would you like to add?',
-                choices: ['Manager', 'Engineer', 'Intern', 'None'],
+                type: "List",
+                message: "What is your role?",
+                name: "role",
+                choices: ["Engineer", "Intern", "Manager"],
             },
         ])
 
-    console.log(answers);
+    // console.log(answers);
     //questions if manager selected
     if (answers.role === "Manager") {
-        const managerAnswers = await inquirer
+        const managerAns = await inquirer
             .prompt([
                 {
-                    type: 'input',
-                    name: 'number',
-                    message: "What is the manager's office number?",
+                    type: "input",
+                    message: "What is your office number?",
+                    name: "officeNumber",
                 },
             ])
         const newManager = new Manager(
             answers.name,
             answers.id,
             answers.email,
-            managerAnswers.officeNumber
+            managerAns.officeNumber
         );
-        newEmployee.push(newManager);
+        newEmployeeData.push(newManager);
 
         //if engineer selected - answer these questions
     } else if (answers.role === "Engineer") {
         const githubAns = await inquirer
             .prompt([
                 {
-                    type: 'input',
-                    name: 'github',
-                    message: "What is the Engineer's Github user name?",
-                },
+                    type: "input",
+                    message: "What is your Github user name?",
+                    name: "github",
+                }
             ])
         const newEngineer = new Engineer(
             answers.name,
@@ -78,16 +73,16 @@ const questions = async () => {
             answers.email,
             githubAns.github
         );
-        newEmployee.push(newEngineer);
+        newEmployeeData.push(newEngineer);
 
         //if intern selected - answer following questions
     } else if (answers.role === "Intern") {
         const internAns = await inquirer
             .prompt([
                 {
-                    type: 'input',
-                    name: 'school',
-                    message: "What university does the intern attend?",
+                    type: "input",
+                    message: "What university did you attend?",
+                    name: "school",
                 },
             ])
         const newIntern = new Intern(
@@ -96,7 +91,7 @@ const questions = async () => {
             answers.email,
             internAns.school
         );
-        newEmployee.push(newIntern);
+        newEmployeeData.push(newIntern);
     }
 };
 
@@ -107,10 +102,10 @@ async function promptQuestions() {
     const addEmployeeAns = await inquirer
         .prompt([
             {
-                type: 'List',
                 name: 'addEmployee',
-                message: 'Who would you like to add?',
-                choices: ['Add an employee', 'Create team'],
+                type: 'List',
+                choices: ['Add a new employee', 'Create team'],
+                message: "What would you like to do next?"
             }
         ])
 
@@ -123,10 +118,10 @@ async function promptQuestions() {
 promptQuestions();
 
 function createTeam() {
-    console.log("new employee", newEmployee)
+    console.log("new employee", newEmployeeData)
     fs.writeFileSync(
-        "index.html",
-        generateTeam(newEmployee),
+        "./index.html",
+        generateTeam(newEmployeeData),
         "utf-8"
     );
 }
