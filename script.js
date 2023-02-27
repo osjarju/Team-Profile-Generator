@@ -1,7 +1,7 @@
 //import packages
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateTeam = require('./dist/generateTeam');
+const { generateTeam } = require('./dist/generateTeam');
 
 //lib modules
 const Engineer = require("./lib/Engineer");
