@@ -31,7 +31,7 @@ const questions = async () => {
                 name: "email",
             },
             {
-                type: "List",
+                type: "list",
                 message: "What is your role?",
                 name: "role",
                 choices: ["Engineer", "Intern", "Manager"],
@@ -103,7 +103,7 @@ async function promptQuestions() {
         .prompt([
             {
                 name: 'addEmployee',
-                type: 'List',
+                type: 'list',
                 choices: ['Add a new employee', 'Create team'],
                 message: "What would you like to do next?"
             }
