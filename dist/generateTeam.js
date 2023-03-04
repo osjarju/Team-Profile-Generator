@@ -1,14 +1,19 @@
 
 const generateManagerHTML = (Manager) => {
+    console.log(Manager)
     return `<div>
     <h2>${Manager.name}</h2>
+    <p>${Manager.id}</p>
     <p>${Manager.email}</p>
+    <p>${Manager.officeNumber}</p>
     </div>`
 };
 
 const generateEngineerHTML = (Engineer) => {
     return `<div>
     <h2>${Engineer.name}</h2>
+    <p>${Engineer.id}</p>
+    <p>${Engineer.email}</p>
     <p>${Engineer.github}</p>
     </div>`
 };
@@ -16,6 +21,8 @@ const generateEngineerHTML = (Engineer) => {
 const generateInternHTML = (Intern) => {
     return `<div>
     <h2>${Intern.name}</h2>
+    <p>${Intern.id}</p>
+    <p>${Intern.email}</p>
     <p>${Intern.school}</p>
 </div>`
 };
@@ -29,7 +36,7 @@ const generateTeam = (teamArray) => {
             if (teamArray[i].getRole() == "Engineer") {
                 cards += generateEngineerHTML(teamArray[i])
             } else {
-                cards += generateEngineerHTML(teamArray[i])
+                cards += generateInternHTML(teamArray[i])
             }
     }
     var htmlString = `
@@ -38,7 +45,7 @@ const generateTeam = (teamArray) => {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Team Profile Generator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   </head>
   <body>
