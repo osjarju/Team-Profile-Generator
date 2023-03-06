@@ -1,0 +1,13 @@
+body {
+    background-color: aqua;
+    text-align: center;
+}
+
+h1 {
+    background-color: rgb(255, 119, 0);
+    color: white;
+}
+
+managerDiv {
+    background-color: rgb(34, 44, 44);
+}
