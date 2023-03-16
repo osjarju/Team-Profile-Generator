@@ -2,31 +2,31 @@
 const generateManagerHTML = (Manager) => {
     console.log(Manager)
     return `<div class="managerDiv">
-    <h2>${Manager.name}</h2>
-    <h3>Manager</h3>
-    <p>ID#: ${Manager.id}</p>
-    <p>Email: ${Manager.email}</p>
-    <p>Office#: ${Manager.officeNumber}</p>
+    <h2 class="managerName">${Manager.name}</h2>
+    <h3 class="managerTitle">Manager</h3>
+    <p class="managerID">ID#: ${Manager.id}</p>
+    <p class="managerEmail">Email: <a href="mailto:${Manager.email}">${Manager.email}</a></p>
+    <p class="managerNum">Office#: ${Manager.officeNumber}</p>
     </div>`
 };
 
 const generateEngineerHTML = (Engineer) => {
     return `<div class="engineerDiv">
-    <h2>${Engineer.name}</h2>
-    <h3>Engineer</h3>
-    <p>ID#: ${Engineer.id}</p>
-    <p>Email: ${Engineer.email}</p>
-    <p>GitHub: ${Engineer.github}</p>
+    <h2 class="engineerName">${Engineer.name}</h2>
+    <h3 class="engineerTitle">Engineer</h3>
+    <p class="engineerID">ID#: ${Engineer.id}</p>
+    <p class="engineerEmail">Email: <a href="mailto:${Engineer.email}">${Engineer.email}</a></p>
+    <p class="engineerGit">GitHub: <a href="mailto:${Engineer.github}">${Engineer.github}</a></p>
     </div>`
 };
 
 const generateInternHTML = (Intern) => {
     return `<div class="internDiv">
-    <h2>${Intern.name}</h2>
-    <h3>Intern</h3>
-    <p>ID#: ${Intern.id}</p>
-    <p>Email: ${Intern.email}</p>
-    <p>School: ${Intern.school}</p>
+    <h2 class="internName">${Intern.name}</h2>
+    <h3 class="internTitle">Intern</h3>
+    <p class="internID">ID#: ${Intern.id}</p>
+    <p class="internEmail">Email: <a href="mailto:${Intern.email}">${Intern.email}</a></p>
+    <p class="internSchool">School: ${Intern.school}</p>
 </div>`
 };
 

@@ -1,13 +1,119 @@
-body {
-    background-color: aqua;
-    text-align: center;
-}
+ /* * {
+     background-color: aqua;
+ }
 
-h1 {
-    background-color: rgb(255, 119, 0);
-    color: white;
-}
+ h1 {
+     background-color: rgb(255, 119, 0);
+     color: white;
+ } */
 
-managerDiv {
-    background-color: rgb(34, 44, 44);
-}
+ /* .managerDiv,
+ .engineerDiv,
+ .internDiv {
+     width: 100%;
+     display: flex;
+     justify-content: space-evenly;
+     flex-wrap: wrap;
+ } */
+
+ /* manager */
+
+ .managerDiv {
+     width: 300px;
+     height: 460px;
+     margin: 25px;
+     background-color: #e46b01;
+     border-radius: 20px;
+     overflow: hidden;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+ }
+
+ .managerName,
+ .managerTitle,
+ .managerID,
+ .managerEmail,
+ .managerNum {
+     height: 50px;
+     padding: 5px;
+     text-align: center;
+     font-family: sans-serif;
+     margin: 25px;
+ }
+
+ .managerNum {
+     margin-top: 10px;
+     background-color: black;
+     color: #fff;
+     display: block;
+     padding: 16px;
+     text-decoration: none;
+     font-weight: 600;
+ }
+
+ /* engineer */
+
+ .engineerDiv {
+     width: 300px;
+     height: 460px;
+     margin: 25px;
+     background-color: #e46b01;
+     border-radius: 20px;
+     overflow: hidden;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+ }
+
+ .engineerName,
+ .engineerTitle,
+ .engineerID,
+ .engineerEmail,
+ .engineerGit {
+     height: 50px;
+     padding: 5px;
+     text-align: center;
+     font-family: sans-serif;
+     margin: 25px;
+ }
+
+ .engineerGit {
+     margin-top: 10px;
+     background-color: black;
+     color: #fff;
+     display: block;
+     padding: 16px;
+     text-decoration: none;
+     font-weight: 600;
+ }
+
+ /* intern */
+
+ .internDiv {
+     width: 300px;
+     height: 460px;
+     margin: 25px;
+     background-color: #e46b01;
+     border-radius: 20px;
+     overflow: hidden;
+     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+ }
+
+ .internName,
+ .internTitle,
+ .internID,
+ .internEmail,
+ .internSchool {
+     height: 50px;
+     padding: 5px;
+     text-align: center;
+     font-family: sans-serif;
+     margin: 25px;
+ }
+
+ .internSchool {
+     margin-top: 10px;
+     background-color: black;
+     color: #fff;
+     display: block;
+     padding: 16px;
+     text-decoration: none;
+     font-weight: 600;
+ }
